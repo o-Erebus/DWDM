@@ -4,6 +4,7 @@ from sklearn.metrics import confusion_matrix, accuracy_score
 from sklearn import tree
 import pandas as pd
 import matplotlib.pyplot as plt
+import seaborn as sns
 
 df = pd.read_csv('decision_tree/Iris.csv')
 
@@ -16,9 +17,14 @@ clf = DecisionTreeClassifier(random_state=42)
 clf.fit(X_train, y_train)
 
 y_pred = clf.predict(X_test)
-
-print(confusion_matrix(y_test, y_pred))
 print(accuracy_score(y_test, y_pred))
+
+cm = confusion_matrix(y_test, y_pred)
+plt.figure(figsize=(10,8))
+sns.heatmap(cm, annot=True, cmap='Blues')
+plt.xlabel('Predicted labels')
+plt.ylabel('True labels')
+plt.show()
 
 plt.figure(figsize=(10, 8))
 tree.plot_tree(clf, feature_names=X.columns, class_names=clf.classes_, filled=True)
